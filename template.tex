@@ -6,18 +6,18 @@
 \makeatother
 \begin{document}
 \pgfplotsset{
-    colormap={cmap_out}{
-        color(0cm)=(blue!30!white) % колдую с оттенками для большей красоты
-        color(1cm)=(red!75!white)
+    colormap={cmap_in}{
+        color(0cm)=(blue!15!white) % колдую с оттенками для большей красоты
+        color(1cm)=(red)
     }, 
 }
 \begin{tikzpicture}
-    \def \xmax {4}
-    \def \xmin {-4}
+    \def \xmax {3}
+    \def \xmin {-3}
     \def \ymax {4}
-    \def \ymin {-5}
-    \def \zmax {5}
-    \def \zmin {-5}
+    \def \ymin {-4}
+    \def \zmax {4.5}
+    \def \zmin {-4.5}
     \begin{axis}[
         width=15cm,
         view={145}{20},  % угол обзора 
@@ -35,28 +35,41 @@
         ticks=none,
         %
         axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_out,             % разные оттенки снаружи 
-        mesh/interior colormap={cmap_in}{   % и внутри
+        colormap name=cmap_in,             % разные оттенки внутри
+        mesh/interior colormap={cmap_out}{   % и снаружи
             color(0cm)=(blue!70!black)      
             color(1cm)=(red!75!black)},
     ]
-    \def \visX {1.5}   % здесь ось вылезает из графика 
-    \def \visY {1}   % здесь ось вылезает из графика 
-    \def \visZ {2.13}   % здесь ось вылезает из графика 
-    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);      % части осей, которые        
-    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);      % будут за 
-    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZ);    % или внутри графика
-    \addplot3[                                          % сам график
-        fill opacity=0.7, draw opacity=0.5,     % прозрачности ячеек и обводки ячеек
+    \def \visX {1}          % здесь ось вылезает из графика 
+    \def \visY {2/3}        % здесь ось вылезает из графика 
+    \def \visZup {2.45}     % здесь ось вылезает из графика 
+    \def \visZdown {-3.83}   % а здесь входит в него снизу
+
+    % Части осей за графиком или внутри 
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
+    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
+
+    % сам график
+    \addplot3[                                  
+        fill opacity=0.6, draw opacity=0.2,     % прозрачности ячеек и обводки ячеек
         surf,                                   
         shader=flat,                            
         samples=60,                             % количество точек. 60 - примерно максимум тикза
-        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,      % приходится работать с параметрическим    
+        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,  % приходится работать с параметрическим    
         z buffer=sort]                          % уравнением. отсюда такая формула 
-        ({(1.5*y*y+1.5)*cos(deg(x))}, {(y*y+1)*sin(deg(x))}, {2.5*y}); % x, y здесь параметры, а не коорд.
-    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   % части осей, торчащие 
-    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   % из графика в наблюдателя
-    \draw[->] (axis cs:0, 0, \visZ) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+        ({(y*y+1)*cos(deg(x))}, {(2/3*y*y+2/3)*sin(deg(x))}, {2.5*y}); % x, y здесь параметры, а не коорд.
+
+    % Некоторые видимые части осей на наблюдателя 
+    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+
+    % ось Z внутри графика
+    \draw[opacity=0.35, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
+
+    % нолик
+    \node at (0.2, 0, -0.25) [opacity=0.5] {$0$};  % тоже подбор координат и прозрачности
     \end{axis}
 \end{tikzpicture}
 \end{document}
