@@ -1,0 +1,91 @@
+\documentclass[border=2pt]{standalone}
+% \documentclass{article}
+\usepackage{tikz}
+\usepackage{pgfplots,tikz-3dplot}
+\pgfplotsset{compat=1.17}
+\makeatother
+\begin{document}
+\pgfplotsset{
+    colormap={cmap_in}{
+        color(0cm)=(blue!15!white)
+        color(1cm)=(red)
+    }, 
+    colormap={cmap_in2}{
+        color(0cm)=(blue!85!white)
+        color(1cm)=(red)
+    }, 
+    colormap={cmap_out}{   
+        color(0cm)=(blue!90!black)      
+        color(1cm)=(red!85!black)
+    },
+}
+\begin{tikzpicture}
+    \def \xmax {5}
+    \def \xmin {-5}
+    \def \ymax {7}
+    \def \ymin {-7}
+    \def \zmax {4.5}
+    \def \zmin {-4.5}
+    \begin{axis}[
+        width=15cm,
+        view={170}{28},  
+        %
+        % рисуем координатные оси, по которым вырезается картинка,
+        % ставятся указатели направлений
+        axis equal image,
+        axis lines=center,
+        xlabel={$x$},
+        ylabel={$y$},
+        zlabel={$z$},
+        xmax=\xmax, xmin=\xmin,
+        ymax=\ymax, ymin=\ymin,
+        zmax=\zmax, zmin=\zmin,
+        ticks=none,
+        %
+        axis line style={draw=none}, 
+        samples=20,
+    ]
+    \def \visXright {-4.68}
+    \def \visXenter {-0.5}
+    \def \visXleft {3.3}
+    \def \visY {0}       
+
+    % Части осей за графиком или внутри 
+    \draw (axis cs:\visXleft, 0, 0) -- (axis cs:\visXenter, 0, 0);   
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
+    \draw (axis cs:\visXright, 0, 0) -- (axis cs:\xmin, 0, 0);   
+
+    % сам график
+    \def \xmult {0.92}
+    \addplot3[                                  
+        fill opacity=0.6, draw opacity=0.2,     
+        surf,                                   
+        shader=flat,                            
+        colormap name=cmap_in,
+        mesh/interior colormap name=cmap_out,
+        domain=-\xmult*pi/2+pi:\xmult*pi/2+pi,y domain=-3:3,  
+        z buffer=sort]                          
+        ({0.5*sec(deg(x))}, {0.5*tan(deg(x))}, {y});
+    \addplot3[                                  
+        fill opacity=0.6, draw opacity=0.2,     
+        surf,                                   
+        shader=flat,                            
+        colormap name=cmap_out,
+        mesh/interior colormap name=cmap_in2,
+        domain=-\xmult*pi/2:\xmult*pi/2,y domain=-3:3,  
+        z buffer=sort]                          
+        ({0.5*sec(deg(x))}, {0.5*tan(deg(x))}, {y});
+
+    % Некоторые видимые части осей на наблюдателя 
+    \draw[->] (axis cs:\visXleft, 0, 0) -- (axis cs:\xmax, 0, 0);   
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
+    \draw[->] (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \zmax);   
+
+    % ось X внутри графика
+    \draw[opacity=0.5] (axis cs:\visXenter, 0, 0) -- (axis cs:\visXright, 0, 0);   
+
+    % нолик
+    \node at (0.2, 0, -0.25) [opacity=1] {$0$};  
+    \end{axis}
+\end{tikzpicture}
+\end{document}
