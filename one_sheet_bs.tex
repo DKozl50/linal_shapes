@@ -7,8 +7,8 @@
 \begin{document}
 \pgfplotsset{
     colormap={cmap_in}{
-        color(0cm)=(blue!15!white) % колдую с оттенками для большей красоты
-        color(1cm)=(red)
+        color(0cm)=(violet!70),      
+        color(1cm)=(red!20)
     }, 
 }
 \begin{tikzpicture}
@@ -37,13 +37,13 @@
         axis line style={draw=none}, % но ось не отображаем (см ниже)
         colormap name=cmap_in,             % разные оттенки внутри
         mesh/interior colormap={cmap_out}{   % и снаружи
-            color(0cm)=(blue!70!black)      
-            color(1cm)=(red!75!black)},
+            color(0cm)=(blue!80)  ,    
+            color(1 cm)=(cyan!25)},
     ]
     \def \visX {1}          % здесь ось вылезает из графика 
-    \def \visY {2/3}        % здесь ось вылезает из графика 
-    \def \visZup {2.45}     % здесь ось вылезает из графика 
-    \def \visZdown {-3.83}   % а здесь входит в него снизу
+    \def \visY {1}        % здесь ось вылезает из графика 
+    \def \visZup {2.2}     % здесь ось вылезает из графика 
+    \def \visZdown {-4.08}   % а здесь входит в него снизу
 
     % Части осей за графиком или внутри 
     \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
@@ -58,7 +58,8 @@
         samples=60,                             % количество точек. 60 - примерно максимум тикза
         domain=0:2*pi,y domain=-pi/2.5:pi/2.5,  % приходится работать с параметрическим    
         z buffer=sort]                          % уравнением. отсюда такая формула 
-        ({(y*y+1)*cos(deg(x))}, {(2/3*y*y+2/3)*sin(deg(x))}, {2.5*y}); % x, y здесь параметры, а не коорд.
+        % ({(y*y+1)*cos(deg(x))}, {(2/3*y*y+2/3)*sin(deg(x))}, {2.5*y}); % x, y здесь параметры, а не коорд.
+        ({(y*y+1)*cos(deg(x))}, {(y*y+1)*sin(deg(x))}, {2.5*y}); % x, y здесь параметры, а не коорд.
 
     % Некоторые видимые части осей на наблюдателя 
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
