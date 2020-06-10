@@ -7,8 +7,10 @@
 \begin{document}
 \pgfplotsset{
     colormap={cmap_in}{
-        color(0cm)=(blue!90!black)      
-        color(1cm)=(red!85!black)
+        % color(0cm)=(blue!90!black)      
+        % color(1cm)=(red!85!black)
+        color(0cm)=(blue!50!white) 
+        color(1cm)=(red)
     }, 
 }
 
@@ -55,7 +57,7 @@
 
     %сам график
     \addplot3[                                  
-       fill opacity=0.4, draw opacity=0.5,     % прозрачности ячеек и обводки ячеек
+       fill opacity=0.4, draw opacity=0.3,     % прозрачности ячеек и обводки ячеек
        surf,                                   
       shader=flat,                            
        samples=60,                             % количество точек. 60 - примерно максимум тикза
