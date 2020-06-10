@@ -1,0 +1,88 @@
+\documentclass[border=2pt]{standalone}
+% \documentclass{article}
+\usepackage{tikz}
+\usepackage{pgfplots,tikz-3dplot}
+\pgfplotsset{compat=1.16}
+\makeatother
+\begin{document}
+\pgfplotsset{
+    colormap={cmap_in}{
+         color(0cm)=(violet!70)      
+        color(1cm)=(red!20)
+    }, 
+}
+
+    
+
+\begin{tikzpicture}
+    \def \xmax {2.2}
+    \def \xmin {-2}
+    \def \ymax {2.4}
+    \def \ymin {-2}
+    \def \zmax {4.8}
+    \def \zmin {-4.5}
+    \begin{axis}[
+        width=15cm,
+        view={145}{20},  % угол обзора 
+        %
+        % рисуем координатные оси, по которым вырезается карт qинка,
+        % ставятся указатели направлений
+        axis equal image,
+        axis lines=center,
+        xlabel={$x$},
+        ylabel={$y$},
+        zlabel={$z$},
+        xmax=\xmax, xmin=\xmin,
+        ymax=\ymax, ymin=\ymin,
+        zmax=\zmax, zmin=\zmin,
+        ticks=none,
+        %
+        axis line style={draw=none}, % но ось не отображаем (см ниже)
+        colormap name=cmap_in,             % разные оттенки внутри
+        mesh/interior colormap={cmap_out}{   % и снаружи
+            color(0cm)=(blue!80)  ,    
+          color(1 cm)=(cyan!25)},
+    ]
+    \def \visX {1}          % здесь ось вылезает из графика 
+    \def \visY {2/3}        % здесь ось вылезает из графика 
+    \def \visZup {3}     % здесь ось вылезает из графика 
+    \def \visZdown {-4.05}   % а здесь входит в него снизу
+
+    % Части осей за графиком или внутри 
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
+    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
+
+    %сам график
+    \addplot3[                                  
+       fill opacity=0.6, draw opacity=0.7,     % прозрачности ячеек и обводки ячеек
+       surf,                                   
+      shader=flat,                            
+       samples=60,                             % количество точек. 60 - примерно максимум тикза
+        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,  % приходится работать с параметрическим    
+        z buffer=sort]                          % уравнением. отсюда такая формула 
+       ({0.5 *(2.3*y )*cos(deg(x))}, {0.5 * (2.3 * y)*sin(deg(x))}, {2.8 * y}); % x, y здесь параметры, а не коорд.
+
+  
+  
+
+      
+      
+        
+    % Некоторые видимые части осей на наблюдателя 
+    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+
+    % ось Z внутри графика
+
+
+
+      \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
+    \draw[opacity=1, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \zmin);
+    % нолик
+    \node at (0.4, 0, -0.25) [opacity=1] {$0$};  % тоже подбор координат и прозрачности
+    \end{axis}
+\end{tikzpicture}
+
+\end{document}
