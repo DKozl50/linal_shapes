@@ -50,14 +50,14 @@
     \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
     \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
 
-    \addplot3[                                  
-       fill opacity=0.5, draw opacity=0.6,
+    \addplot3[
+       fill opacity=0.5, draw opacity=0.3,
        surf,
-      shader=flat,
+       shader=flat,
        samples=60,
-        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,
-        z buffer=sort]
-       ({2  * cos(deg(x))}, {2* sin(deg(x))}, {2.8 * y});
+       domain=0:2*pi,y domain=-pi/2.5:pi/2.5,
+       z buffer=sort]
+       ({2  * cos(deg(x))}, {2 * sin(deg(x))}, {2.8 * y});
 
   
   
