@@ -14,9 +14,6 @@
     },
 }
 
-
-    
-
 \begin{tikzpicture}
     \def \xmax {5}
     \def \xmin {-5}
@@ -49,10 +46,9 @@
            color(1cm)=(red!85!black),}
     ]
     
-    
-    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
-    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
-    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);
+    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);
 
     \addplot3[
        fill opacity=0.5, draw opacity=0.3,
@@ -62,7 +58,7 @@
        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,
        z buffer=sort]
        ({2  * cos(deg(x))}, {1.7 * sin(deg(x))}, {2.8 * y});
-        
+    
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);
     \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);
     \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);
