@@ -1,20 +1,21 @@
 \documentclass[border=2pt]{standalone}
-% \documentclass{article}
+
 \usepackage{tikz}
 \usepackage{pgfplots,tikz-3dplot}
 \pgfplotsset{compat=1.16}
+
 \makeatother
+
 \begin{document}
 \pgfplotsset{
     colormap={cmap_in}{
-                 color(0cm)=(blue!15!white) % колдую с оттенками для большей красоты
+        color(0cm)=(blue!15!white)
         color(1cm)=(red)
-    }, 
+    },
 }
 
-    
-
 \begin{tikzpicture}
+
     \def \xmax {3}
     \def \xmin {-3}
     \def \ymax {4}
