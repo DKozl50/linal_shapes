@@ -63,17 +63,17 @@
        z buffer=sort]
        ({2  * cos(deg(x))}, {1.7 * sin(deg(x))}, {2.8 * y});
         
-    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
-    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
-    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);
 
-
-
-
-      \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
+    \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);
     \draw[opacity=1, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \zmin);
-    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$};  % тоже подбор координат и прозрачности
+    
+    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$};
+    
     \end{axis}
+    
 \end{tikzpicture}
 
 \end{document}
