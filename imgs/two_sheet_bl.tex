@@ -68,8 +68,8 @@
         shader=flat,                            
         samples=40,                             % количество точек. 40 - примерно максимум тикза
         domain=0:2*pi,y domain=0:pi/1.7,  % приходится работать с параметрическим    
-        z buffer=sort]                          % уравнением. отсюда такая формула 
-        ({ 0.7  * ( sqrt(y) * sqrt(y) ) *sin(deg(x))}, { 0.5* ( -sqrt(y) * sqrt(y)  ) * cos(deg(x))}, { 0.7 * sqrt(1 +  2*sqrt(y) * sqrt(y) * sqrt(y) * sqrt(y)) - 0.2 }); 
+        z buffer=sort]
+        ({0.7  * (sqrt(y) ^ 2) * sin(deg(x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(x))}, {0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) - 0.2});
       
       
       
@@ -82,7 +82,7 @@
         samples=40,                             % количество точек. 40 - примерно максимум тикза
         domain=0:2*pi,y domain=0:pi/1.7,,  % приходится работать с параметрическим    
         z buffer=sort]                          % уравнением. отсюда такая формула 
-        ({ 0.7  * ( sqrt(y) * sqrt(y) ) *sin(deg(-x))}, { 0.5* ( -sqrt(y) * sqrt(y)  ) * cos(deg(-x))}, { -0.7 * sqrt(1 +  2*sqrt(y) * sqrt(y) * sqrt(y) * sqrt(y)) + 0.2 }); 
+        ({0.7  * (sqrt(y) ^ 2) * sin(deg(-x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(-x))}, {-0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) + 0.2});
       
       
     
