@@ -33,15 +33,15 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_in,             % разные оттенки внутри
-        mesh/interior colormap={cmap_out}{   % и снаружи
-             color(0cm)=(blue!90!black)      
-        color(1cm)=(red!85!black),}
+        axis line style={draw=none},
+        colormap name=cmap_in,        
+        mesh/interior colormap={cmap_out}{  
+           color(0cm)=(blue!90!black)      
+           color(1cm)=(red!85!black),}
     ]
     \def \visX {2}          % здесь ось вылезает из графика 
     \def \visY {2}        % здесь ось вылезает из графика 
-     \def \visZup {2.8}
+    \def \visZup {2.8}
     \def \visZdown {-4.23}   % а здесь входит в него снизу% а здесь входит в него снизу
 
     \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
@@ -56,22 +56,16 @@
         domain=0:2*pi,y domain=-pi/2.5:pi/2.5,  % приходится работать с параметрическим    
         z buffer=sort]                          % уравнением. отсюда такая формула 
        ({2  * cos(deg(x))}, {2 * sin(deg(x))}, {2.8 * y}); % x, y здесь параметры, а не коорд.
-
-  
-  
-
       
-      
-        
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
     \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
-    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);
 
 
 
       \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
     \draw[opacity=1, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \zmin);
-    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$};  % тоже подбор координат и прозрачности
+    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$}; 
     \end{axis}
 \end{tikzpicture}
 
