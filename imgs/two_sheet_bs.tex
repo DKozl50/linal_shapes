@@ -1,20 +1,22 @@
 \documentclass[border=2pt]{standalone}
-% \documentclass{article}
+
 \usepackage{tikz}
 \usepackage{pgfplots,tikz-3dplot}
 \pgfplotsset{compat=1.16}
+
 \makeatother
+
 \begin{document}
+
 \pgfplotsset{
     colormap={cmap_in}{
-          color(0cm)=(violet!70)      
+        color(0cm)=(violet!70)
         color(1cm)=(red!20)
-    }, 
+    },
 }
 
-    
-
 \begin{tikzpicture}
+
     \def \xmax {3}
     \def \xmin {-3}
     \def \ymax {4}
@@ -23,10 +25,7 @@
     \def \zmin {-3}
     \begin{axis}[
         width=17cm,
-        view={145}{20},  % угол обзора 
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
+        view={145}{20},
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -36,19 +35,17 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        %
-        axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_in,             % разные оттенки внутри
-        mesh/interior colormap={cmap_out}{   % и снаружи
-            color(0cm)=(blue!80)      
+        axis line style={draw=none},
+        colormap name=cmap_in,
+        mesh/interior colormap={cmap_out}{
+            color(0cm)=(blue!80)
             color(1cm)=(cyan!25)},
     ]
-    \def \visX {1}          % здесь ось вылезает из графика 
-    \def \visY {2/3}        % здесь ось вылезает из графика 
-    \def \visZup {1.3}     % здесь ось вылезает из графика 
-    \def \visZdown {-2.2}   % а здесь входит в него снизу
+    \def \visX {1}
+    \def \visY {2/3}
+    \def \visZup {1.3}
+    \def \visZdown {-2.2}
 
-    % Части осей за графиком или внутри 
     \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
     \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
 
