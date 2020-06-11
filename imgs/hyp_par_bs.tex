@@ -1,29 +1,37 @@
 \documentclass[border=2pt]{standalone}
-% \documentclass{article}
+
 \usepackage{tikz}
 \usepackage{pgfplots,tikz-3dplot}
-\pgfplotsset{compat=1.17}
+\pgfplotsset{compat=1.16}
+
 \makeatother
+
+
 \begin{document}
+
 \pgfplotsset{
     colormap={cmap_in}{
-         color(0cm)=(violet!70)      
+        color(0cm)=(violet!70),
         color(1cm)=(red!20)
-    }, 
+    }
 }
+
 \begin{tikzpicture}
+
     \def \xmax {4}
     \def \xmin {-4}
     \def \ymax {4}
     \def \ymin {-3}
     \def \zmax {3}
     \def \zmin {-4}
+
+    \def \visX {2.75}    
+    \def \visZup {0}     
+    \def \visZdown {-3.4}
+
     \begin{axis}[
         width=15cm,
-        view={155}{30},  % угол обзора 
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
+        view={155}{30}, 
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -33,41 +41,35 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        %
-        axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_in,             % разные оттенки внутри
-        mesh/interior colormap={cmap_out}{   % и снаружи
-            color(0cm)=(blue!80)  ,    
-          color(1 cm)=(cyan!25)},
-        samples=40,
-    ]
-    \def \visX {2.75}          % здесь ось вылезает из графика 
-    \def \visZup {0}     % здесь ось вылезает из графика 
-    \def \visZdown {-3.4}   % а здесь входит в него снизу
+        axis line style={draw=none}, 
+        colormap name=cmap_in,             
+        mesh/interior colormap={cmap_out}{ 
+            color(0cm)=(blue!80),    
+            color(1 cm)=(cyan!25)},
+        samples=40
+        ]
 
-    % Части осей за графиком или внутри 
     \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
 
-    % сам график
     \addplot3[                                  
-        fill opacity=0.6, draw opacity=0.2,     % прозрачности ячеек и обводки ячеек
+        fill opacity=0.6, draw opacity=0.2, 
         surf,                                   
         shader=flat,                            
-        domain=-1.5:1.5,y domain=-3:3,  % приходится работать с параметрическим    
-        z buffer=sort]                          % уравнением. отсюда такая формула 
+        domain=-1.5:1.5,y domain=-3:3,  
+        z buffer=sort
+        ]                  
         ({2.5*x}, {y}, {x^2 - y^2}/5);
 
-    % Некоторые видимые части осей на наблюдателя 
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
     \draw[->] (axis cs:0, \ymin, 0) -- (axis cs:0, \ymax, 0);   
-    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   
 
-    % внутри графика
     \draw[opacity=0.35, color=black] (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
     \draw[opacity=0.35, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
+    \node at (0.2, 0, -0.25) [opacity=0.5] {$0$};  
 
-    % нолик
-    \node at (0.2, 0, -0.25) [opacity=0.5] {$0$};  % тоже подбор координат и прозрачности
     \end{axis}
+
 \end{tikzpicture}
+
 \end{document}

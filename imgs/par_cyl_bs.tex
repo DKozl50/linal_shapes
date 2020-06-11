@@ -1,10 +1,14 @@
 \documentclass[border=2pt]{standalone}
-% \documentclass{article}
+
 \usepackage{tikz}
 \usepackage{pgfplots,tikz-3dplot}
-\pgfplotsset{compat=1.17}
+\pgfplotsset{compat=1.16}
+
 \makeatother
+
+
 \begin{document}
+
 \pgfplotsset{
     colormap={cmap_in}{
         color(0cm)=(violet!70),      
@@ -13,21 +17,24 @@
     colormap={cmap_out}{   
         color(0cm)=(blue!80),    
         color(1 cm)=(cyan!25),
-    },
+    }
 }
+
 \begin{tikzpicture}
+    
     \def \xmax {5}
     \def \xmin {-1.5}
     \def \ymax {3}
     \def \ymin {-3}
     \def \zmax {4.5}
     \def \zmin {-4.5}
+
+    \def \visXleft {3.25}
+    \def \visY {0}       
+
     \begin{axis}[
         width=15cm,
         view={160}{40},  
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -37,20 +44,14 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        %
         axis line style={draw=none}, 
-        samples=30,
-    ]
-    \def \visXleft {3.25}
-    \def \visY {0}       
+        samples=30
+        ]
 
-    % Части осей за графиком или внутри 
-    % \draw (axis cs:\visXleft, 0, 0) -- (axis cs:0, 0, 0);   
     \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
     \draw (axis cs:0, 0, 0) -- (axis cs:\xmin, 0, 0);   
     \draw[->] (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \zmax);   
 
-    % сам график
     \addplot3[                                  
         fill opacity=0.6, draw opacity=0.2,     
         surf,                                   
@@ -58,18 +59,18 @@
         colormap name=cmap_out,
         mesh/interior colormap name=cmap_in,
         domain=-2:2,y domain=-3:3,  
-        z buffer=sort]                          
+        z buffer=sort
+        ]                          
         ({x^2}, {x}, {y});
 
-    % Некоторые видимые части осей на наблюдателя 
     \draw[->] (axis cs:\visXleft, 0, 0) -- (axis cs:\xmax, 0, 0);   
     \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
 
-    % ось X внутри графика
     \draw[opacity=0.5] (axis cs:\visXleft, 0, 0) -- (axis cs:0, 0, 0);   
-
-    % нолик
     \node at (-0.3, 0, 0.45) [opacity=1] {$0$};  
+
     \end{axis}
+
 \end{tikzpicture}
+
 \end{document}
