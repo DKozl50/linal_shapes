@@ -24,12 +24,15 @@
     \def \ymin {-5}
     \def \zmax {5}
     \def \zmin {-5.5}
-    \begin{axis}[
+    
+    \def \visX {2}
+    \def \visY {2}
+    \def \visZup {2.9}
+    \def \visZdown {-4.2}
+    
+     \begin{axis}[
         width=15cm,
-        view={145}{20},  % угол обзора 
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
+        view={145}{20},
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -42,13 +45,11 @@
         axis line style={draw=none},
         colormap name=cmap_in,
         mesh/interior colormap={cmap_out}{
-             color(0cm)=(blue!90!black)      
-        color(1cm)=(red!85!black),}
+           color(0cm)=(blue!90!black)
+           color(1cm)=(red!85!black),}
     ]
-    \def \visX {2}
-    \def \visY {2}
-    \def \visZup {2.9}
-    \def \visZdown {-4.2}
+    
+    
     \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
     \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
     \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
