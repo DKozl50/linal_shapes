@@ -23,12 +23,18 @@
     \def \ymin {-3}
     \def \zmax {3}
     \def \zmin {-3}
+    
+    \def \visX {1}
+    \def \visY {2/3}
+    \def \visZup {1.4}
+    \def \visZdown {-2.1}
+    
+    \def \zmidUp {0.48}
+    \def \zmidDown {-0.53}
+    
     \begin{axis}[
         width=17cm,
-        view={145}{20},  % угол обзора 
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
+        view={145}{20},
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -38,75 +44,47 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        %
-        axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_in,             % разные оттенки внутри
-        mesh/interior colormap={cmap_out}{   % и снаружи
-            color(0cm)=(blue!80)      
+        axis line style={draw=none},
+        colormap name=cmap_in,
+        mesh/interior colormap={cmap_out}{
+            color(0cm)=(blue!80)
             color(1cm)=(cyan!25)},
     ]
-    \def \visX {1}          % здесь ось вылезает из графика 
-    \def \visY {2/3}        % здесь ось вылезает из графика 
-    \def \visZup {1.4}     % здесь ось вылезает из графика 
-    \def \visZdown {-2.1}  % а здесь входит в него снизу
 
-    % Части осей за графиком или внутри 
-    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
-    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
-
-      
-      
-      
-      
-      
-      
-      
-      
-         \addplot3[                                  
-        fill opacity=0.3, draw opacity=0.4,     % прозрачности ячеек и обводки ячеек
-        surf,                                   
-        shader=flat,                            
-        samples=40,                             % количество точек. 40 - примерно максимум тикза
-        domain=0:2*pi,y domain=0:pi/1.7,  % приходится работать с параметрическим    
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);
+    
+    \addplot3[
+        fill opacity=0.3, draw opacity=0.4,
+        surf,
+        shader=flat,
+        samples=40,
+        domain=0:2*pi,y domain=0:pi/1.7,
         z buffer=sort]
         ({0.7  * (sqrt(y) ^ 2) * sin(deg(x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(x))}, {0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) - 0.2});
       
-      
-      
-            
-      
-         \addplot3[                                  
-        fill opacity=0.4, draw opacity=0.3,     % прозрачности ячеек и обводки ячеек
-        surf,                                   
-        shader=flat,                            
-        samples=40,                             % количество точек. 40 - примерно максимум тикза
-        domain=0:2*pi,y domain=0:pi/1.7,,  % приходится работать с параметрическим    
-        z buffer=sort]                          % уравнением. отсюда такая формула 
+    \addplot3[
+        fill opacity=0.4, draw opacity=0.3,
+        surf,
+        shader=flat,
+        samples=40,
+        domain=0:2*pi,y domain=0:pi/1.7,
+        z buffer=sort]
         ({0.7  * (sqrt(y) ^ 2) * sin(deg(-x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(-x))}, {-0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) + 0.2});
-      
-      
     
-       
-      
-      
-        
-    % Некоторые видимые части осей на наблюдателя 
-    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
-    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
-    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
-
-  \def \zmidUp {0.48}
-    \def \zmidDown {-0.53}
-    % ось Z внутри графика
-    \draw[opacity=1, color=black] (axis cs:0, 0, \zmidDown) -- (axis cs:0, 0, \zmidUp);  
-
-  
-      \draw[opacity=0.25, color=black] (axis cs:0, 0, \zmidUp) -- (axis cs:0, 0, \visZup);  
-     \draw[opacity=0.25, color=black] (axis cs:0, 0, \zmidDown) -- (axis cs:0, 0, \visZdown);
-       \draw[opacity=1, color=black] (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);
-    % нолик
-    \node at (0.2, 0, -0.25) [opacity=1] {$0$};  % тоже подбор координат и прозрачности
+    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);
+    
+    \draw[opacity=1, color=black] (axis cs:0, 0, \zmidDown) -- (axis cs:0, 0, \zmidUp);
+    \draw[opacity=0.25, color=black] (axis cs:0, 0, \zmidUp) -- (axis cs:0, 0, \visZup);
+    \draw[opacity=0.25, color=black] (axis cs:0, 0, \zmidDown) -- (axis cs:0, 0, \visZdown);
+    \draw[opacity=1, color=black] (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);
+    
+    \node at (0.2, 0, -0.25) [opacity=1] {$0$};
+    
     \end{axis}
+    
 \end{tikzpicture}
 
 \end{document}
