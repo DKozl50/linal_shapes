@@ -26,9 +26,6 @@
     \begin{axis}[
         width=15cm,
         view={145}{20},  % угол обзора 
-        %
-        % рисуем координатные оси, по которым вырезается картинка,
-        % ставятся указатели направлений
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -38,7 +35,6 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        %
         axis line style={draw=none}, % но ось не отображаем (см ниже)
         colormap name=cmap_in,             % разные оттенки внутри
         mesh/interior colormap={cmap_out}{   % и снаружи
@@ -50,10 +46,8 @@
     \def \visZup {3.05}     % здесь ось вылезает из графика 
     \def \visZdown {-3.83}   % а здесь входит в него снизу
 
-    % Части осей за графиком или внутри 
     \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
     \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
- %   \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
 
 
   
@@ -61,8 +55,8 @@
       fill opacity=0.5, draw opacity=0.2,     % прозрачности ячеек и обводки ячеек
        surf,                                   
        shader=flat,                            
-    samples=60,                             % количество точек. 60 - примерно максимум тикза
-       domain=-1:0,y domain=0:2*pi,  % приходится работать с параметрическим    
+    samples=60,                          
+       domain=-1:0,y domain=0:2*pi,  
       z buffer=sort]                          % уравнением. отсюда такая формула 
        (({ 0.25 * sqrt(x^2 - 25 * x) * cos(deg(y))}, { 0.25 * sqrt( x^2 - 25 * x) * sin(deg(y))}, -3.5 * x  ); 
       
@@ -73,19 +67,15 @@
       
       
         
-    % Некоторые видимые части осей на наблюдателя 
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
     \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
-    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);   % здесь пришлось подбирать вручную
+    \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);  
 
-    % ось Z внутри графика
-   % \draw[opacity=1, color=black] (axis cs:0, 0, -1) -- (axis cs:0, 0, 1);  
 
 
       \draw[opacity=0.25, color=black] (axis cs:0, 0, 0) -- (axis cs:0, 0, \visZup);  
     \draw[opacity=1, color=black] (axis cs:0, 0, 0) -- (axis cs:0, 0, \zmin);
-    % нолик
-    \node at (0.2, 0, -0.25) [opacity=1] {$0$};  % тоже подбор координат и прозрачности
+    \node at (0.2, 0, -0.25) [opacity=1] {$0$}; 
     \end{axis}
 \end{tikzpicture}
 
