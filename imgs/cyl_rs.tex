@@ -21,6 +21,12 @@
     \def \ymin {-5}
     \def \zmax {5}
     \def \zmin {-5.5}
+    
+    \def \visX {2}
+    \def \visY {2}
+    \def \visZup {2.8}
+    \def \visZdown {-4.23}
+    
     \begin{axis}[
         width=15cm,
         view={145}{20},
@@ -34,39 +40,36 @@
         zmax=\zmax, zmin=\zmin,
         ticks=none,
         axis line style={draw=none},
-        colormap name=cmap_in,        
-        mesh/interior colormap={cmap_out}{  
-           color(0cm)=(blue!90!black)      
+        colormap name=cmap_in,
+        mesh/interior colormap={cmap_out}{
+           color(0cm)=(blue!90!black)
            color(1cm)=(red!85!black),}
     ]
-    \def \visX {2}          % здесь ось вылезает из графика 
-    \def \visY {2}        % здесь ось вылезает из графика 
-    \def \visZup {2.8}
-    \def \visZdown {-4.23}   % а здесь входит в него снизу% а здесь входит в него снизу
+    
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);
+    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);
 
-    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
-    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
-    \draw (axis cs:0, 0, \zmin) -- (axis cs:0, 0, \visZdown);   
-
-    \addplot3[                                  
-       fill opacity=0.5, draw opacity=0.3,     % прозрачности ячеек и обводки ячеек
-       surf,                                   
-      shader=flat,                            
-       samples=60,                             % количество точек. 60 - примерно максимум тикза
-        domain=0:2*pi,y domain=-pi/2.5:pi/2.5,  % приходится работать с параметрическим    
-        z buffer=sort]                          % уравнением. отсюда такая формула 
-       ({2  * cos(deg(x))}, {2 * sin(deg(x))}, {2.8 * y}); % x, y здесь параметры, а не коорд.
-      
-    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);   
-    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);   
+    \addplot3[
+       fill opacity=0.5, draw opacity=0.3,
+       surf,
+       shader=flat,
+       samples=60,
+       domain=0:2*pi,y domain=-pi/2.5:pi/2.5,
+       z buffer=sort]
+       ({2  * cos(deg(x))}, {2 * sin(deg(x))}, {2.8 * y});
+     
+    \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);
+    \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);
     \draw[->] (axis cs:0, 0, \visZup) -- (axis cs:0, 0, \zmax);
 
-
-
-      \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);  
+    \draw[opacity=0.25, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \visZup);
     \draw[opacity=1, color=black] (axis cs:0, 0, \visZdown) -- (axis cs:0, 0, \zmin);
-    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$}; 
+    
+    \node at (0.4, 0, -0.25) [opacity=0.5] {$0$};
+    
     \end{axis}
+    
 \end{tikzpicture}
 
 \end{document}
