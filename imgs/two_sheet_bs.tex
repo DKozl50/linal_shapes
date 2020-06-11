@@ -61,7 +61,7 @@
         samples=40,
         domain=0:2*pi,y domain=0:pi/1.7,
         z buffer=sort]  
-        ({0.7  * (sqrt(y) ^ 2) * sin(deg(x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(x))}, {0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) - 0.2});
+        ({0.7 * (sqrt(y) ^ 2) * sin(deg(x))}, {0.7 * (-sqrt(y) ^ 2) * cos(deg(x))}, {0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) - 0.2});
       
     \addplot3[
         fill opacity=0.4, draw opacity=0.3,
@@ -70,7 +70,7 @@
         samples=40,
         domain=0:2*pi,y domain=0:pi/1.7,
         z buffer=sort]      
-        ({0.7  * (sqrt(y) ^ 2) * sin(deg(-x))}, {0.7* (-sqrt(y) ^ 2) * cos(deg(-x))}, {-0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) + 0.2});
+        ({0.7 * (sqrt(y) ^ 2) * sin(deg(-x))}, {0.7 * (-sqrt(y) ^ 2) * cos(deg(-x))}, {-0.7 * sqrt(1 + 2 * sqrt(y) ^ 4) + 0.2});
 
     \draw[->] (axis cs:\visX, 0, 0) -- (axis cs:\xmax, 0, 0);
     \draw[->] (axis cs:0, \visY, 0) -- (axis cs:0, \ymax, 0);
