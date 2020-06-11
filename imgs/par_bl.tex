@@ -21,9 +21,15 @@
     \def \ymin {-2}
     \def \zmax {4.5}
     \def \zmin {-1}
+    
+    \def \visX {1}
+    \def \visY {2/3}
+    \def \visZup {3.1}
+    \def \visZdown {-3.83}
+    
     \begin{axis}[
         width=15cm,
-        view={145}{20},  % угол обзора 
+        view={145}{20},
         axis equal image,
         axis lines=center,
         xlabel={$x$},
@@ -33,19 +39,15 @@
         ymax=\ymax, ymin=\ymin,
         zmax=\zmax, zmin=\zmin,
         ticks=none,
-        axis line style={draw=none}, % но ось не отображаем (см ниже)
-        colormap name=cmap_in,             % разные оттенки внутри
-        mesh/interior colormap={cmap_out}{   % и снаружи
+        axis line style={draw=none},
+        colormap name=cmap_in,
+        mesh/interior colormap={cmap_out}{
             color(0cm)=(blue!80)      
             color(1cm)=(cyan!25)},
     ]
-    \def \visX {1}          % здесь ось вылезает из графика 
-    \def \visY {2/3}        % здесь ось вылезает из графика 
-    \def \visZup {3.1}     % здесь ось вылезает из графика 
-    \def \visZdown {-3.83}   % а здесь входит в него снизу
-
-    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);   
-    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);   
+  
+    \draw (axis cs:\xmin, 0, 0) -- (axis cs:\visX, 0, 0);
+    \draw (axis cs:0, \ymin, 0) -- (axis cs:0, \visY, 0);
 
     \addplot3[
        fill opacity=0.5, draw opacity=0.2,
